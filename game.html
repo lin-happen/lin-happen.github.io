@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/trix.css">
+    <script src="js/jquery-3.2.js"></script>
+    <script src="js/trix.js"></script>
+    <script src="js/node.js"></script>
+    <script src="js/preContainer.js"></script>
+    <script src="js/main.js"></script>
+</head>
+<body>
+<div class="wrap">
+    <div id="design">
+        <div class="content">
+            <svg class="line-container"></svg>
+            <div class="node-container"></div>
+            <div class="edit">
+                <h2>Content</h2>
+                <form action="">
+                    <input type="hidden" id="x" name="content">
+                    <trix-editor input="x"></trix-editor>
+                </form>
+                <h2>Title</h2>
+                <form action="" class="input-group">
+                    <input type="text" class="ipt-1 ipt" placeholder="Relation 1">
+                    <input type="text" class="ipt-2 ipt" placeholder="Relation 2">
+                    <input type="text" class="ipt-3 ipt" placeholder="Relation 3">
+                    <input type="text" class="ipt-4 ipt" placeholder="Relation 4">
+                </form>
+                <button class="done">Done</button>
+            </div>
+        </div>
+        <button class="presentation">View Mode</button>
+    </div>
+    <div id="presentation">
+        <button class="fullscreen">Fullscreen</button>
+        <button class="exit">exitFullscreen</button>
+        <button class="design">Design Mode</button>
+    </div>
+</div>
+</body>
+</html>
