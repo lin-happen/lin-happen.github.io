@@ -2,9 +2,452 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
+<style>
+    .flex{
+        display: flex;
+        flex-direction: column;
+    }
+    .w{
+        width: 81px;
+    }
+    table{
+        width: 288px;
+    }
+    td>input{
+        width: 26px;
+    }
+</style>
 <body>
-
+    <div class="flex">
+        <table>
+            <tr>
+                <td style="width: 50px;">第一</td>
+            </tr>
+            <tr>
+                <td>0球</td>
+                <td>1球</td>
+                <td>2球</td>
+                <td>3球</td>
+                <td>4球</td>
+                <td>5球</td>
+                <td>6球</td>
+                <td>7球</td>
+            </tr>
+            <tr>
+                <td><input type="text" class="zero" placeholder="" attr=0></td>
+                <td><input type="text" class="one" placeholder="" attr=1></td>
+                <td><input type="text" class="two" placeholder="" attr=2></td>
+                <td><input type="text" class="three" placeholder="" attr=3></td>
+                <td><input type="text" class="four" placeholder="" attr=4></td>
+                <td><input type="text" class="five" placeholder="" attr=5></td>
+                <td><input type="text" class="six" placeholder="" attr=6></td>
+                <td><input type="text" class="seven" placeholder="" attr=7></td>
+            </tr>
+            <tr>
+                <td>第二</td>
+            </tr>
+            <tr>
+                <td>0球</td>
+                <td>1球</td>
+                <td>2球</td>
+                <td>3球</td>
+                <td>4球</td>
+                <td>5球</td>
+                <td>6球</td>
+                <td>7球</td>
+            </tr>
+            <tr>
+                <td><input type="text" class="zero1" placeholder="" attr=0></td>
+                <td><input type="text" class="one1" placeholder="" attr=1></td>
+                <td><input type="text" class="two1" placeholder="" attr=2></td>
+                <td><input type="text" class="three1" placeholder="" attr=3></td>
+                <td><input type="text" class="four1" placeholder="" attr=4></td>
+                <td><input type="text" class="five1" placeholder="" attr=5></td>
+                <td><input type="text" class="six1" placeholder="" attr=6></td>
+                <td><input type="text" class="seven1" placeholder="" attr=7></td>
+            </tr>
+            <tr>
+                <td>第三</td>
+            </tr>
+            <tr>
+                <td>0球</td>
+                <td>1球</td>
+                <td>2球</td>
+                <td>3球</td>
+                <td>4球</td>
+                <td>5球</td>
+                <td>6球</td>
+                <td>7球</td>
+            </tr>
+            <tr>
+                <td><input type="text" class="zero2" placeholder="" attr=0></td>
+                <td><input type="text" class="one2" placeholder="" attr=1></td>
+                <td><input type="text" class="two2" placeholder="" attr=2></td>
+                <td><input type="text" class="three2" placeholder="" attr=3></td>
+                <td><input type="text" class="four2" placeholder="" attr=4></td>
+                <td><input type="text" class="five2" placeholder="" attr=5></td>
+                <td><input type="text" class="six2" placeholder="" attr=6></td>
+                <td><input type="text" class="seven2" placeholder="" attr=7></td>
+            </tr>
+            <tr>
+                <td>第四</td>
+            </tr>
+            <tr>
+                <td>0球</td>
+                <td>1球</td>
+                <td>2球</td>
+                <td>3球</td>
+                <td>4球</td>
+                <td>5球</td>
+                <td>6球</td>
+                <td>7球</td>
+            </tr>
+            <tr>
+                <td><input type="text" class="zero3" placeholder="" attr=0></td>
+                <td><input type="text" class="one3" placeholder="" attr=1></td>
+                <td><input type="text" class="two3" placeholder="" attr=2></td>
+                <td><input type="text" class="three3" placeholder="" attr=3></td>
+                <td><input type="text" class="four3" placeholder="" attr=4></td>
+                <td><input type="text" class="five3" placeholder="" attr=5></td>
+                <td><input type="text" class="six3" placeholder="" attr=6></td>
+                <td><input type="text" class="seven3" placeholder="" attr=7></td>
+            </tr>
+        </table>
+        <!-- <div>
+            <span>0球赔率</span><input type="text" class="zero" placeholder="0球的赔率">
+        </div>
+        <div>
+            <span>1球赔率</span><input type="text" class="one" placeholder="1球的赔率">
+        </div>
+        <div>
+            <span>2球赔率</span><input type="text" class="two" placeholder="2球的赔率">
+        </div>
+        <div>
+            <span>3球赔率</span><input type="text" class="three" placeholder="3球的赔率">
+        </div>
+        <div>
+            <span>4球赔率</span><input type="text" class="four" placeholder="4球的赔率">
+        </div>
+        <div>
+            <span>5球赔率</span><input type="text" class="five" placeholder="5球的赔率">
+        </div>
+        <div>
+            <span>6球赔率</span><input type="text" class="six" placeholder="6球的赔率">
+        </div>
+        <div>
+            <span>7球赔率</span><input type="text" class="seven" placeholder="7球的赔率">
+        </div> -->
+        <div>
+            <span>投入金额</span><input type="text" class="betsum">
+        </div>
+        <div>
+            <input type="button" value="确认" class="affirm">
+        </div>
+        <!-- <span>1球赔率</span><input type="text" class="one" placeholder="1球的赔率" value="0">
+        <span>2球赔率</span><input type="text" class="two" placeholder="2球的赔率" value="0">
+        <span>3球赔率</span><input type="text" class="three" placeholder="3球的赔率" value="0">
+        <span>4球赔率</span><input type="text" class="four" placeholder="4球的赔率" value="0">
+        <span>5球赔率</span><input type="text" class="five" placeholder="5球的赔率" value="0">
+        <span>6球赔率</span><input type="text" class="six" placeholder="6球的赔率" value="0">
+        <span>7球赔率</span><input type="text" class="seven" placeholder="7球的赔率" value="0">
+        <span>投入金额</span><input type="text" class="betsum"> -->
+        <!-- <input type="button" value="确认" class="affirm"> -->
+        <div class="flex">
+            <div class="opendd">
+                <!-- <div>
+                    <span>第一$(`ss`)球</span>
+                    <span>第二（1）球</span>
+                </div>
+                <div>
+                    <span>倍数</span>
+                    <input type="text" class="betzero">
+                    <span>奖金</span>
+                    <span class="bonuzero">0</span>
+                </div> -->
+            </div>
+            
+            <!-- <div>
+                <span>0球的倍数</span>
+                <input type="text" class="betzero w">
+                <span>奖金:</span>
+                <span class="bonuzero">0</span>
+            </div>
+            <div>
+                <span>1球的倍数</span>
+                <input type="text" class="betone w">
+                <span>奖金:</span>
+                <span class="bonusone">0</span>
+            </div>
+            <div>
+                <span>2球的倍数</span>
+                <input type="text" class="bettwo w">
+                <span>奖金:</span>
+                <span class="bonustwo">0</span>
+            </div>
+            <div>
+                <span>3球的倍数</span>
+                <input type="text" class="betthree w">
+                <span>奖金:</span>
+                <span class="bonusthree">0</span>
+            </div>
+            <div>
+                <span>4球的倍数</span>
+                <input type="text" class="betfour w">
+                <span>奖金:</span>
+                <span class="bonusfour">0</span>
+            </div>
+            <div>
+                <span>5球的倍数</span>
+                <input type="text" class="betfive w">
+                <span>奖金:</span>
+                <span class="bonusfive">0</span>
+            </div>
+            <div>
+                <span>6球的倍数</span>
+                <input type="text" class="betsix w">
+                <span>奖金:</span>
+                <span class="bonussix">0</span>
+            </div>
+            <div>
+                <span>7球的倍数</span>
+                <input type="text" class="betseven w">
+                <span>奖金:</span>
+                <span class="bonusseven">0</span>
+            </div> -->
+        </div>
+        
+    </div>
 </body>
 </html>
+
+
+
+
+<script>
+    let affirm = $('.affirm')
+    let e = []
+    affirm.click(function(){
+        //每球的赔率
+        // let zeroV = $('.zero')[0].value
+        // let oneV = $('.one')[0].value
+        // let twoV = $('.two')[0].value
+        // let threeV = $('.three')[0].value
+        // let fourV = $('.four')[0].value
+        // let fiveV = $('.five')[0].value
+        // let sixV = $('.six')[0].value
+        // let sevenV = $('.seven')[0].value
+        // let zeroV1 = $('.zero1')[0].value
+        // let oneV1 = $('.one1')[0].value
+        // let twoV1 = $('.two1')[0].value
+        // let threeV1 = $('.three1')[0].value
+        // let fourV1 = $('.four1')[0].value
+        // let fiveV1 = $('.five1')[0].value
+        // let sixV1 = $('.six1')[0].value
+        // let sevenV1 = $('.seven1')[0].value
+        // let betAmount = $('.betsum')[0].value //投入金额
+        // let rates = [zeroV,oneV, twoV, threeV, fourV, fiveV, sixV, sevenV];
+        let zeroV = $('.zero')[0]
+        let oneV = $('.one')[0]
+        let twoV = $('.two')[0]
+        let threeV = $('.three')[0]
+        let fourV = $('.four')[0]
+        let fiveV = $('.five')[0]
+        let sixV = $('.six')[0]
+        let sevenV = $('.seven')[0]
+        let zeroV1 = $('.zero1')[0]
+        let oneV1 = $('.one1')[0]
+        let twoV1 = $('.two1')[0]
+        let threeV1 = $('.three1')[0]
+        let fourV1 = $('.four1')[0]
+        let fiveV1 = $('.five1')[0]
+        let sixV1 = $('.six1')[0]
+        let sevenV1 = $('.seven1')[0]
+        let zeroV2 = $('.zero2')[0]
+        let oneV2 = $('.one2')[0]
+        let twoV2 = $('.two2')[0]
+        let threeV2 = $('.three2')[0]
+        let fourV2 = $('.four2')[0]
+        let fiveV2 = $('.five2')[0]
+        let sixV2 = $('.six2')[0]
+        let sevenV2 = $('.seven2')[0]
+        let zeroV3 = $('.zero3')[0]
+        let oneV3 = $('.one3')[0]
+        let twoV3 = $('.two3')[0]
+        let threeV3 = $('.three3')[0]
+        let fourV3 = $('.four3')[0]
+        let fiveV3 = $('.five3')[0]
+        let sixV3 = $('.six3')[0]
+        let sevenV3 = $('.seven3')[0]
+        let betAmount = $('.betsum')[0].value//投入金额
+        // 第一场和第二场的所有球的赔率
+        let rate1 = [zeroV,oneV, twoV, threeV, fourV, fiveV, sixV, sevenV];
+        let rate2 = [zeroV1,oneV1, twoV1, threeV1, fourV1, fiveV1, sixV1, sevenV1];
+        let rate3 = [zeroV2,oneV2, twoV2, threeV2, fourV2, fiveV2, sixV2, sevenV2];
+        let rate4 = [zeroV3,oneV3, twoV3, threeV3, fourV3, fiveV3, sixV3, sevenV3];
+        // rate1 = rate1.filter(item => item.value !== "")
+        // console.log(rate1)
+        
+        // console.log($(".zero")[0].attributes.attr.value)
+        // 计算所有组合的奖金
+        let profits = [];
+        let list = []
+        rate1 = rate1.filter(item => item.value !== '')
+        rate2 = rate2.filter(item => item.value !== "")
+        rate3 = rate3.filter(item => item.value !== "")
+        rate4 = rate4.filter(item => item.value !== "")
+        for(let i=0; i<rate1.length; i++) {
+            if(rate2.length>0){
+                for(let j=0; j<rate2.length; j++) {
+                    if(rate3.length>0){
+                        for(let k=0; k<rate3.length; k++){
+                            if(rate4.length>0){
+                                for(let z=0; z<rate4.length; z++){
+                                    profits.push(rate1[i].value * rate2[j].value * rate3[k].value * rate4[z].value);
+                                    list.push(rate1[i].attributes.attr.value)
+                                    list.push(rate2[j].attributes.attr.value)
+                                    list.push(rate3[k].attributes.attr.value)
+                                    list.push(rate4[z].attributes.attr.value)
+                            }
+                            }else{
+                                profits.push(rate1[i].value * rate2[j].value * rate3[k].value); 
+                                list.push(rate1[i].attributes.attr.value)
+                                list.push(rate2[j].attributes.attr.value)
+                                list.push(rate3[k].attributes.attr.value)
+                            }
+                        }
+                    }else{
+                        profits.push(rate1[i].value * rate2[j].value); 
+                        list.push(rate1[i].attributes.attr.value)
+                        list.push(rate2[j].attributes.attr.value)
+                    }
+                }
+            }else{
+                profits.push(rate1[i].value); 
+                list.push(rate1[i].attributes.attr.value)
+            }
+        }
+
+        let ratios = profits.map(rate => 1/rate);
+        // 正规化比例之和为1  
+        let totalRatio = ratios.reduce((a,b) => a+b, 0);
+
+        ratios = ratios.map(ratio => ratio/totalRatio); 
+        // console.log(ratios)
+        // console.log(betAmount)
+        // 计算理论投注金额(四舍五入)
+        let expectedBets = ratios.map(ratio => Math.round(ratio * betAmount / 2) * 2);
+        // console.log(expectedBets)
+        // 调整为2的倍数
+        let bets = expectedBets.map(bet => {
+        let n = bet;
+        while(n % 2 !== 0) {
+            n--;
+        }
+        return n;
+        });
+
+        // 计算实际投注金额总和
+        
+        let actualTotal
+        if(profits.length !==0){
+            actualTotal = bets.reduce((a,b) => a + b);
+        }
+        // 如果总和小于总投注金额
+        if(actualTotal < betAmount) {
+        // 平均分配剩余金额
+        //...
+        }
+
+        // 如果总和大于总投注金额
+        if(actualTotal > betAmount) {
+        // 从每个球减少少量金额
+        //...
+        }
+        $('.opendd').empty()
+        let s = 0
+        let x = []
+        console.log(list)
+        let change = 0
+        for(let i = 0;i<list.length;i++){
+                $('.opendd').append(`
+                    <div>
+                        ${rate1.length >= 1 ? '<span>第一场（'+list[i]+'）球</span>' : ''}
+                        ${rate2.length >= 1 ? '<span>第二场（'+list[++i]+'）球</span>' : ''}
+                        ${rate3.length >= 1 ? '<span>第三场（'+list[++i]+'）球</span>' : ''}
+                        ${rate4.length >= 1 ? '<span>第四场（'+list[++i]+'）球</span>' : ''}
+                    </div>
+                    <span>倍数</span>
+                    <input class="inp-${s}" type="text" value="${bets[s] / 2}">
+                        
+                `)
+                $('.opendd').append(`
+                    <span>奖金</span>
+                    <span class="bonus-${s}">${change == 0 ? $(`.inp-${s}`).val()*2*profits[s] : change*2*profits[s]}</span>
+                `)
+            x.push(s)
+            s++
+        }
+        for(let i = 0;i<x.length;i++){
+            $(`.inp-${i}`).on('blur',function(){
+                change = $(`.inp-${i}`).val();
+                $(`.bonus-${i}`).text(change*2*profits[i])
+            })
+        }
+
+    
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        // let rates = [zeroV,oneV, twoV, threeV, fourV, fiveV, sixV, sevenV];
+        // console.log(rates)
+        // rates.map(rate=>{
+        //     if(rate == 0){
+        //         rates.pop(rate)
+        //     }
+        // })
+       
+
+        // console.log(bets);
+        // let bonuszero = $(".bonuzero")[0]
+        // let bonusone = $(".bonusone")[0]
+        // let bonustwo = $(".bonustwo")[0]
+        // let bonusthree = $(".bonusthree")[0]
+        // let bonusfour = $(".bonusfour")[0]
+        // let bonusfive = $(".bonusfive")[0]
+        // let bonussix = $(".bonussix")[0]
+        // let bonusseven = $(".bonusseven")[0]
+        // let dd = [bonuszero,bonusone, bonustwo, bonusthree, bonusfour, bonusfive, bonussix, bonusseven];
+        // let ss = dd.map(function(rate,index){
+        //     rate.innerHTML = bets[index] * rates[index]
+        // });
+        // let betzero = $(".betzero")
+        // let betone = $(".betone")
+        // let bettwo = $(".bettwo")
+        // let betthree = $(".betthree")
+        // let betfour = $(".betfour")
+        // let betfive = $(".betfive")
+        // let betsix = $(".betsix")
+        // let betseven = $(".betseven")
+        // let betArr = [betzero,betone,bettwo,betthree,betfour,betfive,betsix,betseven]
+        // betArr.map(function(rata,index){
+        //     rata[0].value = bets[index] / 2;
+        // })
+
+    })
+
+    
+</script>
