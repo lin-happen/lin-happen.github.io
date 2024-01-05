@@ -7,6 +7,9 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <style>
+    input{
+        color: red;
+    }
     .flex{
         display: flex;
         flex-direction: column;
@@ -20,12 +23,44 @@
     td>input{
         width: 26px;
     }
+    .opendd>input{
+        width: 30px;
+    }
+    .wire{
+        width: 300px;
+        height: 1px;
+        background-color: red;
+        margin-top: 5px;
+    }
+    .le{
+        margin-left: 10px;
+    }
+    .le1{
+        margin-left: 27px;
+    }
+    .re{
+        position: relative;
+        top: 21px;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 1px solid black;
+        line-height: 20px;
+        text-align: center;
+        color: red;
+    }
+    .red{
+        color: red;
+    }
 </style>
 <body>
     <div class="flex">
         <table>
             <tr>
-                <td style="width: 50px;">第一</td>
+                <td>队名</td>
+                <td colspan="8"><input type="text" class="Tname1" style="width: 200px;"></td>
+            
             </tr>
             <tr>
                 <td>0球</td>
@@ -48,7 +83,8 @@
                 <td><input type="text" class="seven" placeholder="" attr=7></td>
             </tr>
             <tr>
-                <td>第二</td>
+                <td>队名</td>
+                <td colspan="8"><input type="text" class="Tname2" style="width: 200px;"></td>
             </tr>
             <tr>
                 <td>0球</td>
@@ -71,7 +107,8 @@
                 <td><input type="text" class="seven1" placeholder="" attr=7></td>
             </tr>
             <tr>
-                <td>第三</td>
+                <td>队名</td>
+                <td colspan="8"><input type="text" class="Tname3" style="width: 200px;"></td>
             </tr>
             <tr>
                 <td>0球</td>
@@ -94,7 +131,8 @@
                 <td><input type="text" class="seven2" placeholder="" attr=7></td>
             </tr>
             <tr>
-                <td>第四</td>
+                <td>队名</td>
+                <td colspan="8"><input type="text" class="Tname4" style="width: 200px;"></td>
             </tr>
             <tr>
                 <td>0球</td>
@@ -145,7 +183,7 @@
             <span>投入金额</span><input type="text" class="betsum">
         </div>
         <div>
-            <input type="button" value="确认" class="affirm">
+            <input type="button" style="color: black;" value="确认" class="affirm">
         </div>
         <!-- <span>1球赔率</span><input type="text" class="one" placeholder="1球的赔率" value="0">
         <span>2球赔率</span><input type="text" class="two" placeholder="2球的赔率" value="0">
@@ -372,30 +410,47 @@
         let x = []
         console.log(list)
         let change = 0
+        let Tname1 = $(".Tname1")
+        let Tname2 = $(".Tname2")
+        let Tname3 = $(".Tname3")
+        let Tname4 = $(".Tname4")
         for(let i = 0;i<list.length;i++){
                 $('.opendd').append(`
                     <div>
-                        ${rate1.length >= 1 ? '<span>第一场（'+list[i]+'）球</span>' : ''}
-                        ${rate2.length >= 1 ? '<span>第二场（'+list[++i]+'）球</span>' : ''}
-                        ${rate3.length >= 1 ? '<span>第三场（'+list[++i]+'）球</span>' : ''}
-                        ${rate4.length >= 1 ? '<span>第四场（'+list[++i]+'）球</span>' : ''}
+                        <div class="re">${s+1}</div>
+                        ${rate1.length >= 1 ? '<span>'+Tname1.val()+'(<span class="red">'+list[i]+'</span>)球</span>' : ''}
+                        ${rate2.length >= 1 ? '<span>'+Tname2.val()+'(<span class="red">'+list[++i]+'</span>)球</span>' : ''}<br>
+                        ${rate3.length >= 1 ? '<span class="le1">'+Tname3.val()+'(<span class="red">'+list[++i]+'</span>)球</span>' : ''}
+                        ${rate4.length >= 1 ? '<span>'+Tname4.val()+'(<span class="red">'+list[++i]+'</span>)球</span>' : ''}
                     </div>
-                    <span>倍数</span>
+                    <span class="le1">倍数</span>
                     <input class="inp-${s}" type="text" value="${bets[s] / 2}">
                         
                 `)
                 $('.opendd').append(`
                     <span>奖金</span>
-                    <span class="bonus-${s}">${change == 0 ? $(`.inp-${s}`).val()*2*profits[s] : change*2*profits[s]}</span>
+                    <span class="red bonus-${s}">${change == 0 ? $(`.inp-${s}`).val()*2*profits[s] : change*2*profits[s]}</span>
+                    <div class="wire"></div>
                 `)
             x.push(s)
             s++
         }
+        let run = 0
         for(let i = 0;i<x.length;i++){
             $(`.inp-${i}`).on('blur',function(){
                 change = $(`.inp-${i}`).val();
                 $(`.bonus-${i}`).text(change*2*profits[i])
+                console.log(x)
+                for(let b = 0;b<x.length;b++){
+                    console.log($(`.inp-${b}`).val())
+                    // $(`.inp-${b}`).val()
+                    run += parseFloat($(`.inp-${b}`).val() * 2) 
+                    console.log(run)
+                    $('.betsum')[0].value = run
+                }
+                run = 0
             })
+            
         }
 
     
