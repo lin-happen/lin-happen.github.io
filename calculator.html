@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>体彩赔率计算器</title>
-    <script src="js/jquery-3.2.js"></script>
+    <title>足球计算器</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <style>
     input{
@@ -53,35 +53,55 @@
     .red{
         color: red;
     }
+    .font-s{
+        font-size: 11px;
+    }
+    .display-goal{
+        display: none;
+    }
+    .display-htc{
+        display: none;
+    }
+    .display-wod{
+        display: none;
+    }
+    .display-cp{
+        display: none;
+    }
+    .display-score{
+        display: none;
+    }
+    .bunchAll>tbody>tr>td{
+        cursor: pointer;
+        text-align: center;
+    }
+    tbody::after{
+        content: '';
+        display: block;
+        border-bottom: 1px solid red;
+        width: 300px;
+        position: absolute;
+    }
+    .redB{
+        background-color: red;
+    }
 </style>
 <body>
     <div class="flex">
         <table class="bunchAll">
-            <tr class="bunch-0">
-                <td>队名</td>
-                <td colspan="8"><input type="text" class="Tname0" style="width: 200px;"></td>
-            
-            </tr>
-            <tr>
-                <td>0球</td>
-                <td>1球</td>
-                <td>2球</td>
-                <td>3球</td>
-                <td>4球</td>
-                <td>5球</td>
-                <td>6球</td>
-                <td>7球</td>
-            </tr>
-            <tr>
-                <td><input type="text" class="zero-0" placeholder="" attr=0></td>
-                <td><input type="text" class="one-0" placeholder="" attr=1></td>
-                <td><input type="text" class="two-0" placeholder="" attr=2></td>
-                <td><input type="text" class="three-0" placeholder="" attr=3></td>
-                <td><input type="text" class="four-0" placeholder="" attr=4></td>
-                <td><input type="text" class="five-0" placeholder="" attr=5></td>
-                <td><input type="text" class="six-0" placeholder="" attr=6></td>
-                <td><input type="text" class="seven-0" placeholder="" attr=7></td>
-            </tr>
+            <tbody class="session">
+                <tr class="bunch">
+                    <td>队名</td>
+                    <td colspan="8"><input type="text" class="Tname0" style="width: 200px;"></td>
+                </tr>
+                <tr class="pattern">
+                    <td colspan="2" class="goal" attr="0">进球数</td>
+                    <td colspan="2" class="htc" attr="0">半全场</td>
+                    <td colspan="2" class="wod" attr="0">胜平负</td>
+                    <td class="cp" attr="0">让球</td>
+                    <td class="score" attr="0">比分</td>
+                </tr>
+            </tbody>
         </table>
         <div>
             <span>投入金额</span><input type="text" class="betsum">
@@ -101,37 +121,23 @@
 </html>
 
 <script>
+    let bunchId = 1
     let affirm = $('.affirm')
     let e = []
-    let bunchId = 1
     $(".add").click(function(){
         $(".bunchAll").append(`
             <tbody>
-                <tr class="bunch-${bunchId}">
+                <tr class="bunch">
                     <td>队名</td>
                     <td colspan="8"><input type="text" class="Tname${bunchId}" style="width: 200px;"></td>
-                
                 </tr>
-                <tr>
-                    <td>0球</td>
-                    <td>1球</td>
-                    <td>2球</td>
-                    <td>3球</td>
-                    <td>4球</td>
-                    <td>5球</td>
-                    <td>6球</td>
-                    <td>7球</td>
+                <tr class="pattern">
+                    <td colspan="2" class="goal" attr="${bunchId}">进球数</td>
+                    <td colspan="2" class="htc" attr="${bunchId}">半全场</td>
+                    <td colspan="2" class="wod" attr="${bunchId}">胜平负</td>
+                    <td class="cp" attr="${bunchId}">让球</td>
+                    <td class="score" attr="${bunchId}">比分</td>
                 </tr>
-                <tr>
-                    <td><input type="text" class="zero-${bunchId}" placeholder="" attr=0></td>
-                    <td><input type="text" class="one-${bunchId}" placeholder="" attr=1></td>
-                    <td><input type="text" class="two-${bunchId}" placeholder="" attr=2></td>
-                    <td><input type="text" class="three-${bunchId}" placeholder="" attr=3></td>
-                    <td><input type="text" class="four-${bunchId}" placeholder="" attr=4></td>
-                    <td><input type="text" class="five-${bunchId}" placeholder="" attr=5></td>
-                    <td><input type="text" class="six-${bunchId}" placeholder="" attr=6></td>
-                    <td><input type="text" class="seven-${bunchId}" placeholder="" attr=7></td>
-                </tr>    
             </tbody>
         `)
         bunchId++
@@ -143,152 +149,448 @@
             bunchId--
         }
     })
+
+    $(this).click(function(event){
+        if(event.target.className == "goal"){
+            $(event.target).addClass("redB")
+            $(event.target).siblings().removeClass("redB")
+            $(event.target).parent().nextAll().remove()
+            $(event.target).parent().parent().append(
+                `
+                    <tr>
+                        <td>0球</td>
+                        <td>1球</td>
+                        <td>2球</td>
+                        <td>3球</td>
+                        <td>4球</td>
+                        <td>5球</td>
+                        <td>6球</td>
+                        <td>7球</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="zero-${$(event.target).attr('attr')}" placeholder="" attr="(0)球"></td>
+                        <td><input type="text" class="one-${$(event.target).attr('attr')}" placeholder="" attr="(1)球"></td>
+                        <td><input type="text" class="two-${$(event.target).attr('attr')}" placeholder="" attr="(2)球"></td>
+                        <td><input type="text" class="three-${$(event.target).attr('attr')}" placeholder="" attr="(3)球"></td>
+                        <td><input type="text" class="four-${$(event.target).attr('attr')}" placeholder="" attr="(4)球"></td>
+                        <td><input type="text" class="five-${$(event.target).attr('attr')}" placeholder="" attr="(5)球"></td>
+                        <td><input type="text" class="six-${$(event.target).attr('attr')}" placeholder="" attr="(6)球"></td>
+                        <td><input type="text" class="seven-${$(event.target).attr('attr')}" placeholder="" attr="(7)球"></td>
+                    </tr>
+                `
+            )
+        }
+        if(event.target.className == "htc"){
+            $(event.target).addClass("redB")
+            $(event.target).siblings().removeClass("redB")
+            $(event.target).parent().nextAll().remove()
+            $(event.target).parent().parent().append(
+                `
+                <tr>
+                    <td>胜胜</td>
+                    <td>胜平</td>
+                    <td>胜负</td>
+                    <td>平胜</td>
+                    <td>平平</td>
+                    <td>负胜</td>
+                    <td>负平</td>
+                    <td>负负</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="zero-${$(event.target).attr('attr')}" placeholder="" attr="胜胜"></td>
+                    <td><input type="text" class="one-${$(event.target).attr('attr')}" placeholder="" attr="胜平"></td>
+                    <td><input type="text" class="two-${$(event.target).attr('attr')}" placeholder="" attr="胜负"></td>
+                    <td><input type="text" class="three-${$(event.target).attr('attr')}" placeholder="" attr="平胜"></td>
+                    <td><input type="text" class="four-${$(event.target).attr('attr')}" placeholder="" attr="平平"></td>
+                    <td><input type="text" class="five-${$(event.target).attr('attr')}" placeholder="" attr="负胜"></td>
+                    <td><input type="text" class="six-${$(event.target).attr('attr')}" placeholder="" attr="负平"></td>
+                    <td><input type="text" class="seven-${$(event.target).attr('attr')}" placeholder="" attr="负负"></td>
+                </tr>
+                `
+            )
+        }
+        if(event.target.className == "wod"){
+            $(event.target).addClass("redB")
+            $(event.target).siblings().removeClass("redB")
+            $(event.target).parent().nextAll().remove()
+            $(event.target).parent().parent().append(
+                `
+                <tr>
+                    <td>胜</td>
+                    <td>平</td>
+                    <td>负</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="zero-${$(event.target).attr('attr')}" placeholder="" attr="胜"></td>
+                    <td><input type="text" class="one-${$(event.target).attr('attr')}" placeholder="" attr="平"></td>
+                    <td><input type="text" class="two-${$(event.target).attr('attr')}" placeholder="" attr="负"></td>
+                </tr>
+                `
+            )
+        }
+        if(event.target.className == "cp"){
+            $(event.target).addClass("redB")
+            $(event.target).siblings().removeClass("redB")
+            $(event.target).parent().nextAll().remove()
+            $(event.target).parent().parent().append(
+                `
+                <tr>
+                    <td>让胜</td>
+                    <td>让平</td>
+                    <td>让负</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="zero-${$(event.target).attr('attr')}" placeholder="" attr="让胜"></td>
+                    <td><input type="text" class="one-${$(event.target).attr('attr')}" placeholder="" attr="让平"></td>
+                    <td><input type="text" class="two-${$(event.target).attr('attr')}" placeholder="" attr="让负"></td>
+                </tr>
+                `
+            )
+        }
+        if(event.target.className == "score"){
+            $(event.target).addClass("redB")
+            $(event.target).siblings().removeClass("redB")
+            $(event.target).parent().nextAll().remove()
+            $(event.target).parent().parent().append(
+                `
+                <tr>
+                    <td>1:0</td>
+                    <td>2:0</td>
+                    <td>2:1</td>
+                    <td>3:0</td>
+                    <td>3:1</td>
+                    <td>3:2</td>
+                    <td>4:0</td>
+                    <td>4:1</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="zero-${$(event.target).attr('attr')}" placeholder="" attr=1:0></td>
+                    <td><input type="text" class="one-${$(event.target).attr('attr')}" placeholder="" attr=2:0></td>
+                    <td><input type="text" class="two-${$(event.target).attr('attr')}" placeholder="" attr=2:1></td>
+                    <td><input type="text" class="three-${$(event.target).attr('attr')}" placeholder="" attr=3:0></td>
+                    <td><input type="text" class="four-${$(event.target).attr('attr')}" placeholder="" attr=3:1></td>
+                    <td><input type="text" class="five-${$(event.target).attr('attr')}" placeholder="" attr=3:2></td>
+                    <td><input type="text" class="six-${$(event.target).attr('attr')}" placeholder="" attr=4:0></td>
+                    <td><input type="text" class="seven-${$(event.target).attr('attr')}" placeholder="" attr=4:1></td>
+                </tr>
+                <tr>
+                    <td>4:2</td>
+                    <td>5:0</td>
+                    <td>5:1</td>
+                    <td>5:2</td>
+                    <td>0:0</td>
+                    <td>1:1</td>
+                    <td>2:2</td>
+                    <td>3:3</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="eig-${$(event.target).attr('attr')}" placeholder="" attr="4:2"></td>
+                    <td><input type="text" class="nine-${$(event.target).attr('attr')}" placeholder="" attr="5:0"></td>
+                    <td><input type="text" class="eleven-${$(event.target).attr('attr')}" placeholder="" attr="5:1"></td>
+                    <td><input type="text" class="twelve-${$(event.target).attr('attr')}" placeholder="" attr="5:2"></td>
+                    <td><input type="text" class="thirteen-${$(event.target).attr('attr')}" placeholder="" attr="0:0"></td>
+                    <td><input type="text" class="fourteen-${$(event.target).attr('attr')}" placeholder="" attr="1:1"></td>
+                    <td><input type="text" class="fifteen-${$(event.target).attr('attr')}" placeholder="" attr="2:2"></td>
+                    <td><input type="text" class="sixteen-${$(event.target).attr('attr')}" placeholder="" attr="3:3"></td>
+                </tr>
+                <tr>
+                    <td>0:1</td>
+                    <td>0:2</td>
+                    <td>1:2</td>
+                    <td>0:3</td>
+                    <td>1:3</td>
+                    <td>2:3</td>
+                    <td>0:4</td>
+                    <td>1:4</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="seventeen-${$(event.target).attr('attr')}" placeholder="" attr="0:1"></td>
+                    <td><input type="text" class="eighteen-${$(event.target).attr('attr')}" placeholder="" attr="0:2"></td>
+                    <td><input type="text" class="nineteen-${$(event.target).attr('attr')}" placeholder="" attr="1:2"></td>
+                    <td><input type="text" class="twenty-${$(event.target).attr('attr')}" placeholder="" attr="0:3"></td>
+                    <td><input type="text" class="twentyOne-${$(event.target).attr('attr')}" placeholder="" attr="1:3"></td>
+                    <td><input type="text" class="twentyTwo-${$(event.target).attr('attr')}" placeholder="" attr="2:3"></td>
+                    <td><input type="text" class="twentyThree-${$(event.target).attr('attr')}" placeholder="" attr="0:4"></td>
+                    <td><input type="text" class="twentyFour-${$(event.target).attr('attr')}" placeholder="" attr="1:4"></td>
+                </tr>
+                <tr>
+                    <td>2:4</td>
+                    <td>0:5</td>
+                    <td>1:5</td>
+                    <td>2:5</td>
+                    <td class="font-s">胜其他</td>
+                    <td class="font-s">平其他</td>
+                    <td class="font-s">负其他</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="twentyFive-${$(event.target).attr('attr')}" placeholder="" attr="2:4"></td>
+                    <td><input type="text" class="twentySix-${$(event.target).attr('attr')}" placeholder="" attr="0:5"></td>
+                    <td><input type="text" class="twentySeven-${$(event.target).attr('attr')}" placeholder="" attr="1:5"></td>
+                    <td><input type="text" class="twentyEight-${$(event.target).attr('attr')}" placeholder="" attr="2:5"></td>
+                    <td><input type="text" class="twentyNine-${$(event.target).attr('attr')}" placeholder="" attr="胜其他"></td>
+                    <td><input type="text" class="thirty-${$(event.target).attr('attr')}" placeholder="" attr="平其他"></td>
+                    <td><input type="text" class="thirtyOne-${$(event.target).attr('attr')}" placeholder="" attr="负其他"></td>
+                </tr>
+                `
+            )
+        }
+    })
+
+    // console.log($(".goal,.wod"))
     affirm.click(function(){
         let betAmount = $('.betsum')[0].value
         //每球的赔率
-        for(let i =0;i<bunchId;i++){
-            let zeroName = `zeroV${i}`
-            window[zeroName] = $(`.zero-${i}`)[0]
-            let oneName = `oneV${i}`
-            window[oneName] = $(`.one-${i}`)[0]
-            let twoName = `twoV${i}`
-            window[twoName] = $(`.two-${i}`)[0]
-            let threeName = `threeV${i}`
-            window[threeName] = $(`.three-${i}`)[0]
-            let fourName = `fourV${i}`
-            window[fourName] = $(`.four-${i}`)[0]
-            let fiveName = `fiveV${i}`
-            window[fiveName] = $(`.five-${i}`)[0]
-            let sixName = `sixV${i}`
-            window[sixName] = $(`.six-${i}`)[0]
-            let sevenName = `sevenV${i}`
-            window[sevenName] = $(`.seven-${i}`)[0]
+        let isF = []
+        $('.goal,.wod,.htc,.cp,.score').each(function(index,item){
+            if($($('.goal,.wod,.htc,.cp,.score')[index]).hasClass('redB')){
+                isF.push(true)
+            }else{
+                isF.push(false)
+            }
+        })
+        if(isF.filter(x => x === true).length == bunchId){
+            for(let i =0;i<bunchId;i++){
+                let zeroName = `zeroV${i}`
+                window[zeroName] = $(`.zero-${i}`)[0]
+                let oneName = `oneV${i}`
+                window[oneName] = $(`.one-${i}`)[0]
+                let twoName = `twoV${i}`
+                window[twoName] = $(`.two-${i}`)[0]
+                let threeName = `threeV${i}`
+                window[threeName] = $(`.three-${i}`)[0]
+                let fourName = `fourV${i}`
+                window[fourName] = $(`.four-${i}`)[0]
+                let fiveName = `fiveV${i}`
+                window[fiveName] = $(`.five-${i}`)[0]
+                let sixName = `sixV${i}`
+                window[sixName] = $(`.six-${i}`)[0]
+                let sevenName = `sevenV${i}`
+                window[sevenName] = $(`.seven-${i}`)[0]
+                let eigName = `eigV${i}`
+                window[eigName] = $(`.eig-${i}`)[0]
+                let nineName = `nineV${i}`
+                window[nineName] = $(`.nine-${i}`)[0]
+                let elevenName = `elevenV${i}`
+                window[elevenName] = $(`.eleven-${i}`)[0]
+                let twelveName = `twelveV${i}`
+                window[twelveName] = $(`.twelve-${i}`)[0]
+                let thirteenName = `thirteenV${i}`
+                window[thirteenName] = $(`.thirteen-${i}`)[0]
+                let fourteenName = `fourteenV${i}`
+                window[fourteenName] = $(`.fourteen-${i}`)[0]
+                let fifteenName = `fifteenV${i}`
+                window[fifteenName] = $(`.fifteen-${i}`)[0]
+                let sixteenName = `sixteenV${i}`
+                window[sixteenName] = $(`.sixteen-${i}`)[0]
+                let seventeenName = `seventeenV${i}`
+                window[seventeenName] = $(`.seventeen-${i}`)[0]
+                let eighteenName = `eighteenV${i}`
+                window[eighteenName] = $(`.eighteen-${i}`)[0]
+                let nineteenName = `nineteenV${i}`
+                window[nineteenName] = $(`.nineteen-${i}`)[0]
+                let twentyName = `twentyV${i}`
+                window[twentyName] = $(`.twenty-${i}`)[0]
+                let twentyOneName = `twentyOneV${i}`
+                window[twentyOneName] = $(`.twentyOne-${i}`)[0]
+                let twentyTwoName = `twentyTwoV${i}`
+                window[twentyTwoName] = $(`.twentyTwo-${i}`)[0]
+                let twentyThreeName = `twentyThreeV${i}`
+                window[twentyThreeName] = $(`.twentyThree-${i}`)[0]
+                let twentyFourName = `twentyFourV${i}`
+                window[twentyFourName] = $(`.twentyFour-${i}`)[0]
+                let twentyFiveName = `twentyFiveV${i}`
+                window[twentyFiveName] = $(`.twentyFive-${i}`)[0]
+                let twentySixName = `twentySixV${i}`
+                window[twentySixName] = $(`.twentySix-${i}`)[0]
+                let twentySevenName = `twentySevenV${i}`
+                window[twentySevenName] = $(`.twentySeven-${i}`)[0]
+                let twentyEightName = `twentyEightV${i}`
+                window[twentyEightName] = $(`.twentyEight-${i}`)[0]
+                let twentyNineName = `twentyNineV${i}`
+                window[twentyNineName] = $(`.twentyNine-${i}`)[0]
+                let thirtyName = `thirtyV${i}`
+                window[thirtyName] = $(`.thirty-${i}`)[0]
+                let thirtyOneName = `thirtyOneV${i}`
+                window[thirtyOneName] = $(`.thirtyOne-${i}`)[0]
+                
 
-            let rateName = `rate${i+1}`
-            window[rateName] = [window[zeroName],window[oneName], window[twoName], window[threeName], window[fourName], window[fiveName], window[sixName], window[sevenName]];
-            window[rateName] = window[rateName].filter(item => item.value !== "")
-            let TnameN = `Tname${i}`
-            window[TnameN] = $(`.Tname${i}`)
-        }
-        // 计算所有组合的奖金
-        let profits = [];
-        let list = []
-        for(let i=0; i<rate1.length; i++) {
-            if(typeof rate2 !='undefined'){
-                for(let j=0; j<rate2.length; j++) {
-                    if(typeof rate3 !='undefined'){
-                        for(let k=0; k<rate3.length; k++){
-                            if(typeof rate4 !='undefined'){
-                                for(let z=0; z<rate4.length; z++){
-                                    profits.push(rate1[i].value * rate2[j].value * rate3[k].value * rate4[z].value);
-                                    list.push(rate1[i].attributes.attr.value)
-                                    list.push(rate2[j].attributes.attr.value)
-                                    list.push(rate3[k].attributes.attr.value)
-                                    list.push(rate4[z].attributes.attr.value)
-                            }
+
+
+
+
+
+
+
+                let rateName = `rate${i+1}`
+                if(typeof window[eigName] == 'undefined' && typeof window[threeName] != 'undefined'){
+                    window[rateName] = [window[zeroName],window[oneName], window[twoName], window[threeName], window[fourName], window[fiveName], window[sixName], window[sevenName]];
+                }else if(typeof window[threeName] == 'undefined'){
+                    window[rateName] = [window[zeroName],window[oneName], window[twoName]];
+                }else{
+                    console.log(3)
+                    window[rateName] = [
+                        window[zeroName]
+                        ,window[oneName]
+                        , window[twoName]
+                        , window[threeName]
+                        , window[fourName]
+                        , window[fiveName]
+                        , window[sixName]
+                        , window[sevenName]
+                        , window[eigName]
+                        , window[nineName]
+                        , window[elevenName]
+                        , window[twelveName]
+                        , window[thirteenName]
+                        , window[fourteenName]
+                        , window[fifteenName]
+                        , window[sixteenName]
+                        , window[seventeenName]
+                        , window[eighteenName]
+                        , window[nineteenName]
+                        , window[twentyName]
+                        , window[twentyOneName]
+                        , window[twentyTwoName]
+                        , window[twentyThreeName]
+                        , window[twentyFourName]
+                        , window[twentyFiveName]
+                        , window[twentySixName]
+                        , window[twentySevenName]
+                        , window[twentyEightName]
+                        , window[twentyNineName]
+                        , window[thirtyName]
+                        , window[thirtyOneName]
+                    ];
+                }
+                    window[rateName] = window[rateName].filter(item => item.value !== "")
+                    let TnameN = `Tname${i}`
+                    window[TnameN] = $(`.Tname${i}`)
+                }
+            }else{
+                alert("请选择投注模式！")
+            }
+            // 计算所有组合的奖金
+            let profits = [];
+            let list = []
+            if(typeof rate1 !='undefined' && rate1.length >0){
+                for(let i=0; i<rate1.length; i++) {
+                    if(typeof rate2 !='undefined' && rate2.length >0){
+                        for(let j=0; j<rate2.length; j++) {
+                            if(typeof rate3 !='undefined' && rate3.length >0){
+                                for(let k=0; k<rate3.length; k++){
+                                    if(typeof rate4 !='undefined' && rate4.length >0){
+                                        for(let z=0; z<rate4.length; z++){
+                                            profits.push(rate1[i].value * rate2[j].value * rate3[k].value * rate4[z].value);
+                                            list.push(rate1[i].attributes.attr.value)
+                                            list.push(rate2[j].attributes.attr.value)
+                                            list.push(rate3[k].attributes.attr.value)
+                                            list.push(rate4[z].attributes.attr.value)
+                                    }
+                                    }else{
+                                        profits.push(rate1[i].value * rate2[j].value * rate3[k].value); 
+                                        list.push(rate1[i].attributes.attr.value)
+                                        list.push(rate2[j].attributes.attr.value)
+                                        list.push(rate3[k].attributes.attr.value)
+                                    }
+                                }
                             }else{
-                                profits.push(rate1[i].value * rate2[j].value * rate3[k].value); 
+                                profits.push(rate1[i].value * rate2[j].value); 
                                 list.push(rate1[i].attributes.attr.value)
                                 list.push(rate2[j].attributes.attr.value)
-                                list.push(rate3[k].attributes.attr.value)
                             }
                         }
                     }else{
-                        profits.push(rate1[i].value * rate2[j].value); 
+                        profits.push(rate1[i].value); 
                         list.push(rate1[i].attributes.attr.value)
-                        list.push(rate2[j].attributes.attr.value)
+                        console.log(rate1)
                     }
                 }
             }else{
-                profits.push(rate1[i].value); 
-                list.push(rate1[i].attributes.attr.value)
             }
-        }
 
-        let ratios = profits.map(rate => 1/rate);
-        // 正规化比例之和为1  
-        let totalRatio = ratios.reduce((a,b) => a+b, 0);
+            let ratios = profits.map(rate => 1/rate);
+            // 正规化比例之和为1  
+            let totalRatio = ratios.reduce((a,b) => a+b, 0);
 
-        ratios = ratios.map(ratio => ratio/totalRatio); 
-        // console.log(ratios)
-        // console.log(betAmount)
-        // 计算理论投注金额(四舍五入)
-        let expectedBets = ratios.map(ratio => Math.round(ratio * betAmount / 2) * 2);
-        // console.log(expectedBets)
-        // 调整为2的倍数
-        let bets = expectedBets.map(bet => {
-        let n = bet;
-        while(n % 2 !== 0) {
-            n--;
-        }
-        return n;
-        });
+            ratios = ratios.map(ratio => ratio/totalRatio); 
+            // console.log(ratios)
+            // console.log(betAmount)
+            // 计算理论投注金额(四舍五入)
+            let expectedBets = ratios.map(ratio => Math.round(ratio * betAmount / 2) * 2);
+            // console.log(expectedBets)
+            // 调整为2的倍数
+            let bets = expectedBets.map(bet => {
+            let n = bet;
+            while(n % 2 !== 0) {
+                n--;
+            }
+            return n;
+            });
 
-        // 计算实际投注金额总和
-        
-        let actualTotal
-        if(profits.length !==0){
-            actualTotal = bets.reduce((a,b) => a + b);
-        }
-        // 如果总和小于总投注金额
-        if(actualTotal < betAmount) {
-        // 平均分配剩余金额
-        //...
-        }
-
-        // 如果总和大于总投注金额
-        if(actualTotal > betAmount) {
-        // 从每个球减少少量金额
-        //...
-        }
-        $('.opendd').empty()
-        let s = 0
-        let x = []
-        console.log(list)
-        let change = 0
-        // let Tname1 = $(".Tname1")
-        // let Tname2 = $(".Tname2")
-        // let Tname3 = $(".Tname3")
-        // let Tname4 = $(".Tname4")
-        for(let i = 0;i<list.length;i++){
-                $('.opendd').append(`
-                    <div>
-                        <div class="re">${s+1}</div>
-                        ${rate1.length >= 1 ? '<span>'+Tname0.val()+'(<span class="red">'+list[i]+'</span>)球</span>' : ''}
-                        ${typeof rate2 !='undefined' ? '<span>'+Tname1.val()+'(<span class="red">'+list[++i]+'</span>)球</span>' : ''}<br>
-                        ${typeof rate3 !='undefined' ? '<span class="le1">'+Tname2.val()+'(<span class="red">'+list[++i]+'</span>)球</span>' : ''}
-                        ${typeof rate4 !='undefined' ? '<span>'+Tname3.val()+'(<span class="red">'+list[++i]+'</span>)球</span>' : ''}
-                    </div>
-                    <span class="le1">倍数</span>
-                    <input class="inp-${s}" type="text" value="${bets[s] / 2}">
-                        
-                `)
-                $('.opendd').append(`
-                    <span>奖金</span>
-                    <span class="red bonus-${s}">${change == 0 ? $(`.inp-${s}`).val()*2*profits[s] : change*2*profits[s]}</span>
-                    <span>元</span>
-                    <div class="wire"></div>
-                `)
-            x.push(s)
-            s++
-        }
-        let run = 0
-        for(let i = 0;i<x.length;i++){
-            $(`.inp-${i}`).on('blur',function(){
-                change = $(`.inp-${i}`).val();
-                $(`.bonus-${i}`).text(change*2*profits[i])
-                console.log(x)
-                for(let b = 0;b<x.length;b++){
-                    console.log($(`.inp-${b}`).val())
-                    // $(`.inp-${b}`).val()
-                    run += parseFloat($(`.inp-${b}`).val() * 2) 
-                    console.log(run)
-                    $('.betsum')[0].value = run
-                }
-                run = 0
-            })
+            // 计算实际投注金额总和
             
-        }
+            let actualTotal
+            if(profits.length !==0){
+                actualTotal = bets.reduce((a,b) => a + b);
+            }
+            // 如果总和小于总投注金额
+            if(actualTotal < betAmount) {
+            // 平均分配剩余金额
+            //...
+            }
+
+            // 如果总和大于总投注金额
+            if(actualTotal > betAmount) {
+            // 从每个球减少少量金额
+            //...
+            }
+            $('.opendd').empty()
+            let s = 0
+            let x = []
+            let change = 0
+            // let Tname1 = $(".Tname1")
+            // let Tname2 = $(".Tname2")
+            // let Tname3 = $(".Tname3")
+            // let Tname4 = $(".Tname4")
+            for(let i = 0;i<list.length;i++){
+                    $('.opendd').append(`
+                        <div>
+                            <div class="re">${s+1}</div>
+                            ${rate1.length >= 1 ? '<span>'+Tname0.val()+'<span class="red">'+list[i]+'</span></span>' : ''}
+                            ${typeof rate2 !='undefined' && rate2.length >0 ? '<span style="margin-left:16px;">'+Tname1.val()+'<span class="red">'+list[++i]+'</span></span>' : ''}<br>
+                            ${typeof rate3 !='undefined' && rate3.length >0 ? '<span class="le1">'+Tname2.val()+'<span class="red">'+list[++i]+'</span></span>' : ''}
+                            ${typeof rate4 !='undefined' && rate4.length >0 ? '<span style="margin-left:16px;">'+Tname3.val()+'<span class="red">'+list[++i]+'</span></span>' : ''}
+                        </div>
+                        <span class="le1">倍数</span>
+                        <input class="inp-${s}" type="text" value="${bets[s] / 2}">
+                            
+                    `)
+                    $('.opendd').append(`
+                        <span>奖金</span>
+                        <span class="red bonus-${s}">${change == 0 ? $(`.inp-${s}`).val()*2*profits[s] : change*2*profits[s]}</span>
+                        <div class="wire"></div>
+                    `)
+                x.push(s)
+                s++
+            }
+            let run = 0
+            for(let i = 0;i<x.length;i++){
+                $(`.inp-${i}`).on('blur',function(){
+                    change = $(`.inp-${i}`).val();
+                    $(`.bonus-${i}`).text(change*2*profits[i])
+                    console.log(x)
+                    for(let b = 0;b<x.length;b++){
+                        console.log($(`.inp-${b}`).val())
+                        // $(`.inp-${b}`).val()
+                        run += parseFloat($(`.inp-${b}`).val() * 2) 
+                        console.log(run)
+                        $('.betsum')[0].value = run
+                    }
+                    run = 0
+                })
+                
+            }
+        
     })
 
     
