@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>足球计算器</title>
-    <script src="js/jquery-3.2.js"></script>
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 </head>
 <style>
     input{
@@ -146,7 +146,24 @@
         if(bunchId > 1){
             let children = $('.bunchAll').children();
             children.eq(bunchId-1).remove();
+            // console.log(profits)
+            if(bunchId == 2){
+                rate2 = rate2.filter(function(){
+                    return false
+                })
+            }
+            if(bunchId == 3){
+                rate3 = rate3.filter(function(){
+                    return false
+                })
+            }
+            if(bunchId == 4){
+                rate4 = rate4.filter(function(){
+                    return false
+                })
+            }
             bunchId--
+            $(affirm).click()
         }
     })
 
@@ -470,8 +487,10 @@
                 alert("请选择投注模式！")
             }
             // 计算所有组合的奖金
-            let profits = [];
-            let list = []
+            // let profits = [];
+            // let list = []
+            window.profits = []
+            window.list = []
             if(typeof rate1 !='undefined' && rate1.length >0){
                 for(let i=0; i<rate1.length; i++) {
                     if(typeof rate2 !='undefined' && rate2.length >0){
@@ -502,7 +521,6 @@
                     }else{
                         profits.push(rate1[i].value); 
                         list.push(rate1[i].attributes.attr.value)
-                        console.log(rate1)
                     }
                 }
             }else{
@@ -590,6 +608,7 @@
                 })
                 
             }
+            // return list
         
     })
 
